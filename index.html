@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fortis Automação | Portões Automáticos, Motores e Segurança</title>
+  <meta name="description" content="Instalação e manutenção rápida de portões automáticos, motores deslizantes e basculantes, interfonia e travas elétricas. Atendimento emergencial. Chame no WhatsApp." />
+  <meta name="theme-color" content="#0F172A" />
+
+  <!-- Fonts: Outfit (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slateink: { 950: "#0F172A", 900: "#1E293B", 800: "#334155" },
+            signal: { DEFAULT: "#0EA5E9", dark: "#0284C7", soft: "#38BDF8" },
+            safety: { DEFAULT: "#F97316", dark: "#EA580C" },
+            wa: "#25D366",
+          },
+          fontFamily: {
+            display: ["Outfit", "system-ui", "sans-serif"],
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            glow: "0 0 40px rgba(14, 165, 233, 0.25)",
+            card: "0 18px 50px rgba(15, 23, 42, 0.18)",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Custom utilities beyond Tailwind defaults */
+    :root {
+      --glass: rgba(15, 23, 42, 0.72);
+    }
+    body { font-family: Inter, system-ui, sans-serif; }
+    .font-display { font-family: Outfit, system-ui, sans-serif; }
+
+    .glass-nav {
+      background: var(--glass);
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .ticker {
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .status-pulse::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+      animation: pulse-dot 1.8s ease-out infinite;
+      display: inline-block;
+    }
+    @keyframes pulse-dot {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+      70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    .service-card:hover .service-img { transform: scale(1.06); }
+    .gallery-item:hover img { transform: scale(1.08); }
+
+    .estimator-option.active {
+      border-color: #0EA5E9;
+      background: rgba(14, 165, 233, 0.12);
+      box-shadow: 0 0 0 1px #0EA5E9;
+    }
+
+    .float-wa {
+      animation: float-y 3s ease-in-out infinite;
+    }
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* Mobile drawer */
+    .drawer { transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+    .drawer.open { transform: translateX(0); }
+  </style>
+</head>
+<body class="bg-slateink-950 text-slate-100 antialiased overflow-x-hidden">
+
+  <!-- ========== TOP EMERGENCY TICKER ========== -->
+  <div class="bg-safety text-slateink-950 text-sm font-semibold overflow-hidden relative z-[70]">
+    <div class="flex whitespace-nowrap ticker py-2 will-change-transform">
+      <span class="mx-8">🚨 Atendimento Rápido para Manutenção de Portões • Técnicos Especializados • Clique e Chame no WhatsApp</span>
+      <span class="mx-8">🚨 Atendimento Rápido para Manutenção de Portões • Técnicos Especializados • Clique e Chame no WhatsApp</span>
+      <span class="mx-8">🚨 Atendimento Rápido para Manutenção de Portões • Técnicos Especializados • Clique e Chame no WhatsApp</span>
+      <span class="mx-8">🚨 Atendimento Rápido para Manutenção de Portões • Técnicos Especializados • Clique e Chame no WhatsApp</span>
+    </div>
+  </div>
+
+  <!-- ========== STICKY GLASSMORPHISM NAV ========== -->
+  <header id="site-header" class="sticky top-0 z-[60] glass-nav">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="flex h-[4.25rem] items-center justify-between gap-4">
+        <!-- Brand -->
+        <a href="#topo" class="flex items-center gap-2.5 shrink-0 group" aria-label="Fortis Automação">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-signal text-white shadow-glow group-hover:bg-signal-dark transition">
+            <!-- Electric / gear mark -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M13 2L4 14h7l-1 8 10-13h-7l0-7z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="leading-tight">
+            <span class="block font-display font-bold text-[1.05rem] tracking-tight text-white">Fortis</span>
+            <span class="block text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-signal-soft">Automação</span>
+          </span>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden lg:flex items-center gap-7 text-[0.92rem] font-medium text-slate-300" aria-label="Principal">
+          <a href="#servicos" class="hover:text-white transition">Serviços</a>
+          <a href="#manutencao" class="hover:text-white transition">Manutenção</a>
+          <a href="#portfolio" class="hover:text-white transition">Portfólio</a>
+          <a href="#orcamento" class="hover:text-white transition">Orçamento</a>
+        </nav>
+
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <!-- Status badge -->
+          <span class="status-pulse hidden md:inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">
+            Disponível Agora
+          </span>
+
+          <!-- Header CTA -->
+          <a
+            href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+preciso+de+um+t%C3%A9cnico+para+port%C3%A3o+autom%C3%A1tico"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden sm:inline-flex items-center gap-2 rounded-full bg-wa px-4 py-2.5 text-sm font-bold text-white shadow-lg hover:brightness-110 transition"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chamar Técnico no WhatsApp
+          </a>
+
+          <!-- Burger -->
+          <button id="burger" type="button" class="lg:hidden grid h-11 w-11 place-items-center rounded-xl border border-slate-600/60 bg-slateink-900 text-white" aria-label="Abrir menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div id="drawer" class="drawer fixed inset-y-0 right-0 z-[65] w-[min(100%,20rem)] bg-slateink-900 border-l border-slate-700/50 p-6 lg:hidden" aria-hidden="true">
+      <div class="flex items-center justify-between mb-8">
+        <span class="font-display font-bold text-lg">Menu</span>
+        <button id="drawer-close" type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-slate-600" aria-label="Fechar menu">✕</button>
+      </div>
+      <nav class="flex flex-col gap-4 text-lg font-medium" aria-label="Mobile">
+        <a href="#servicos" class="drawer-link">Serviços</a>
+        <a href="#manutencao" class="drawer-link">Manutenção</a>
+        <a href="#portfolio" class="drawer-link">Portfólio</a>
+        <a href="#orcamento" class="drawer-link">Orçamento</a>
+        <a href="#contato" class="drawer-link">Contato</a>
+      </nav>
+      <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+preciso+de+atendimento" target="_blank" rel="noopener noreferrer" class="mt-8 flex items-center justify-center gap-2 rounded-full bg-wa py-3.5 font-bold text-white">WhatsApp (11) 98765-4321</a>
+      <p class="mt-4 text-sm text-slate-400 status-pulse inline-flex items-center gap-2">Disponível Agora</p>
+    </div>
+    <div id="drawer-backdrop" class="fixed inset-0 z-[64] bg-black/50 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+  </header>
+
+  <main id="topo">
+    <!-- ========== HERO ========== -->
+    <section class="relative min-h-[92svh] flex items-end lg:items-center overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="images/hero.jpg" alt="Residência moderna com acesso automatizado" class="h-full w-full object-cover object-center" />
+        <div class="absolute inset-0 bg-gradient-to-r from-slateink-950 via-slateink-950/85 to-slateink-950/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slateink-950 via-transparent to-slateink-950/50"></div>
+      </div>
+
+      <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 pb-16 pt-28 w-full">
+        <div class="max-w-3xl reveal">
+          <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-signal/30 bg-signal/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-signal-soft">
+            Portões Automáticos &amp; Segurança de Acesso
+          </p>
+          <h1 class="font-display text-[clamp(2.1rem,5.5vw,3.75rem)] font-extrabold leading-[1.08] tracking-tight text-white">
+            Seu Portão Travou? Instalação e Manutenção Rápida de Portões Automáticos com Garantia.
+          </h1>
+          <p class="mt-5 max-w-2xl text-lg text-slate-300 leading-relaxed">
+            Soluções robustas para residências, condomínios e empresas. Velocidade no atendimento, segurança no acesso e durabilidade com peças de marcas referência no Brasil.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+meu+port%C3%A3o+travou+e+preciso+de+ajuda+urgente"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2.5 rounded-full bg-wa px-6 py-3.5 text-base font-bold text-white shadow-lg hover:brightness-110 transition min-h-[3.25rem]"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Chamar no WhatsApp
+            </a>
+            <a
+              href="#orcamento"
+              class="inline-flex items-center justify-center gap-2 rounded-full border border-slate-400/40 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur hover:bg-white/10 transition min-h-[3.25rem]"
+            >
+              Solicitar Orçamento Grátis
+            </a>
+          </div>
+
+          <!-- Trust badges — no reviews -->
+          <ul class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
+            <li class="rounded-2xl border border-slate-600/40 bg-slateink-900/60 px-4 py-3 backdrop-blur">
+              <p class="font-display font-bold text-white">Garantia de 1 Ano</p>
+              <p class="text-sm text-slate-400">Em serviços e peças instaladas</p>
+            </li>
+            <li class="rounded-2xl border border-slate-600/40 bg-slateink-900/60 px-4 py-3 backdrop-blur">
+              <p class="font-display font-bold text-white">Até 2 Horas*</p>
+              <p class="text-sm text-slate-400">Deslocamento na região de cobertura</p>
+            </li>
+            <li class="rounded-2xl border border-slate-600/40 bg-slateink-900/60 px-4 py-3 backdrop-blur">
+              <p class="font-display font-bold text-white">Equipe Especializada</p>
+              <p class="text-sm text-slate-400">Técnicos uniformizados e treinados</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SERVICES MATRIX ========== -->
+    <section id="servicos" class="relative py-20 sm:py-24 bg-slateink-900">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="max-w-2xl reveal">
+          <p class="text-signal font-bold text-sm uppercase tracking-wider mb-2">Serviços</p>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">Automação completa do seu acesso.</h2>
+          <p class="mt-3 text-slate-400 text-lg">Do destravamento emergencial à instalação premium — tudo sob um único padrão de qualidade.</p>
+        </div>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-2">
+          <!-- Card 1 -->
+          <article id="manutencao" class="service-card group reveal rounded-3xl overflow-hidden border border-slate-700/60 bg-slateink-950 shadow-card">
+            <div class="relative h-48 overflow-hidden">
+              <img src="images/service-manutencao.jpg" alt="Técnico em manutenção" class="service-img h-full w-full object-cover transition duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slateink-950 to-transparent"></div>
+              <span class="absolute left-4 bottom-4 rounded-full bg-safety px-3 py-1 text-xs font-bold text-slateink-950">Urgência</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-white">Manutenção Corretiva &amp; Emergencial</h3>
+              <p class="mt-2 text-slate-400 leading-relaxed">Desentravamento de urgência, troca de placas eletrônicas e reparo de motores queimados — com diagnóstico claro e peças originais.</p>
+              <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+preciso+de+manuten%C3%A7%C3%A3o+emergencial+no+port%C3%A3o" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-signal font-semibold hover:text-signal-soft">
+                Solicitar técnico <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="service-card group reveal rounded-3xl overflow-hidden border border-slate-700/60 bg-slateink-950 shadow-card">
+            <div class="relative h-48 overflow-hidden">
+              <img src="images/service-motor.jpg" alt="Instalação de motor" class="service-img h-full w-full object-cover transition duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slateink-950 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-white">Instalação de Motores Deslizantes &amp; Basculantes</h3>
+              <p class="mt-2 text-slate-400 leading-relaxed">Automação com motores PPA, Peccinin e Rossi — marcas referência no Brasil. Instalação limpa, alinhamento e configuração de fim de curso.</p>
+              <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+quero+automatizar+meu+port%C3%A3o" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-signal font-semibold hover:text-signal-soft">
+                Orçar instalação <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="service-card group reveal rounded-3xl overflow-hidden border border-slate-700/60 bg-slateink-950 shadow-card">
+            <div class="relative h-48 overflow-hidden">
+              <img src="images/service-controle.jpg" alt="Controle de acesso" class="service-img h-full w-full object-cover transition duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slateink-950 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-white">Controles Remotos &amp; Travas Elétricas</h3>
+              <p class="mt-2 text-slate-400 leading-relaxed">Cópias de controle com proteção anti-clonagem e instalação de travas elétricas automáticas para reforçar a segurança do portão.</p>
+              <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+preciso+de+controle+remoto+ou+trava+el%C3%A9trica" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-signal font-semibold hover:text-signal-soft">
+                Pedir orçamento <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="service-card group reveal rounded-3xl overflow-hidden border border-slate-700/60 bg-slateink-950 shadow-card">
+            <div class="relative h-48 overflow-hidden">
+              <img src="images/service-interfone.jpg" alt="Interfone e fechadura digital" class="service-img h-full w-full object-cover transition duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slateink-950 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-white">Interfonia &amp; Fechaduras Digitais</h3>
+              <p class="mt-2 text-slate-400 leading-relaxed">Interfones para residências e condomínios, fechaduras digitais e integração com o sistema de abertura do portão.</p>
+              <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+quero+instalar+interfone+ou+fechadura+digital" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-signal font-semibold hover:text-signal-soft">
+                Falar com especialista <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== QUICK ESTIMATOR WIDGET ========== -->
+    <section id="orcamento" class="py-20 sm:py-24 bg-slateink-950 relative overflow-hidden">
+      <div class="absolute -right-24 top-10 h-72 w-72 rounded-full bg-signal/10 blur-3xl pointer-events-none"></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 relative">
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div class="reveal">
+            <p class="text-safety font-bold text-sm uppercase tracking-wider mb-2">Estimativa rápida</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">O que você precisa agora?</h2>
+            <p class="mt-3 text-slate-400 text-lg">Selecione a opção e avance direto para o WhatsApp com a mensagem pronta para o técnico.</p>
+            <ul class="mt-8 space-y-3 text-slate-300">
+              <li class="flex gap-3"><span class="text-signal font-bold">01</span> Sem formulários longos</li>
+              <li class="flex gap-3"><span class="text-signal font-bold">02</span> Resposta em horário comercial e emergência 24h</li>
+              <li class="flex gap-3"><span class="text-signal font-bold">03</span> Orçamento sem compromisso</li>
+            </ul>
+          </div>
+
+          <div class="reveal rounded-3xl border border-slate-700/70 bg-slateink-900 p-6 sm:p-8 shadow-card">
+            <p class="font-display text-lg font-semibold text-white mb-4">Escolha sua necessidade</p>
+            <div id="estimator" class="grid gap-3" role="radiogroup" aria-label="Tipo de serviço">
+              <button type="button" class="estimator-option active text-left rounded-2xl border border-slate-600/60 bg-slateink-950 px-4 py-4 transition hover:border-signal/50" data-msg="Olá! Quero automatizar um portão novo. Podem me ajudar com orçamento?" data-label="Automatizar portão novo">
+                <span class="block font-semibold text-white">Quero Automatizar um Portão Novo</span>
+                <span class="block text-sm text-slate-400 mt-0.5">Instalação de motor deslizante ou basculante</span>
+              </button>
+              <button type="button" class="estimator-option text-left rounded-2xl border border-slate-600/60 bg-slateink-950 px-4 py-4 transition hover:border-signal/50" data-msg="Olá! Meu portão quebrou / travou e preciso de atendimento urgente." data-label="Portão travou">
+                <span class="block font-semibold text-white">Meu Portão Quebrou / Travou</span>
+                <span class="block text-sm text-slate-400 mt-0.5">Manutenção corretiva e emergencial</span>
+              </button>
+              <button type="button" class="estimator-option text-left rounded-2xl border border-slate-600/60 bg-slateink-950 px-4 py-4 transition hover:border-signal/50" data-msg="Olá! Quero instalar interfone / fechadura digital. Podem orçar?" data-label="Interfone">
+                <span class="block font-semibold text-white">Quero Instalar Interfone</span>
+                <span class="block text-sm text-slate-400 mt-0.5">Interfonia e controle de acesso</span>
+              </button>
+              <button type="button" class="estimator-option text-left rounded-2xl border border-slate-600/60 bg-slateink-950 px-4 py-4 transition hover:border-signal/50" data-msg="Olá! Preciso de controle remoto ou trava elétrica para o portão." data-label="Controle / trava">
+                <span class="block font-semibold text-white">Controle Remoto ou Trava Elétrica</span>
+                <span class="block text-sm text-slate-400 mt-0.5">Cópias anti-clonagem e travas de segurança</span>
+              </button>
+            </div>
+
+            <a
+              id="estimator-cta"
+              href="https://wa.me/5511987654321?text=Ol%C3%A1%21+Quero+automatizar+um+port%C3%A3o+novo.+Podem+me+ajudar+com+or%C3%A7amento%3F"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-signal px-5 py-4 text-base font-bold text-white hover:bg-signal-dark transition shadow-glow min-h-[3.4rem]"
+            >
+              Falar com Especialista no WhatsApp
+            </a>
+            <p class="mt-3 text-center text-xs text-slate-500">*Tempo de atendimento sujeito à disponibilidade e região.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== GALLERY / PORTFOLIO ========== -->
+    <section id="portfolio" class="py-20 sm:py-24 bg-slateink-900">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 reveal">
+          <div>
+            <p class="text-signal font-bold text-sm uppercase tracking-wider mb-2">Portfólio</p>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">Projetos que inspiram confiança.</h2>
+          </div>
+          <p class="text-slate-400 max-w-md">Residencial e comercial: acabamento limpo, cabos organizados e automação alinhada ao padrão do imóvel.</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3] col-span-2 lg:col-span-1 lg:row-span-2 lg:aspect-auto lg:min-h-full">
+            <img src="images/gate-modern.jpg" alt="Portão moderno em residência" class="absolute inset-0 h-full w-full object-cover transition duration-700" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-slateink-950/90 to-transparent text-sm font-semibold">Acesso residencial premium</figcaption>
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/gallery-1.jpg" alt="Fachada contemporânea" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/gallery-2.jpg" alt="Projeto arquitetônico" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/gallery-3.jpg" alt="Ambiente externo" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/gallery-4.jpg" alt="Residência com portão integrado" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/gallery-5.jpg" alt="Projeto de alto padrão" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3]">
+            <img src="images/garage.jpg" alt="Garagem e acesso veicular" class="h-full w-full object-cover transition duration-700" />
+          </figure>
+          <figure class="gallery-item reveal relative overflow-hidden rounded-2xl aspect-[4/3] col-span-2">
+            <img src="images/gallery-6.jpg" alt="Fachada comercial" class="h-full w-full object-cover transition duration-700" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-slateink-950/90 to-transparent text-sm font-semibold">Instalações comerciais e condomínios</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY TRUST / DIFERENCIAIS ========== -->
+    <section class="py-20 sm:py-24 bg-slateink-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <p class="text-signal font-bold text-sm uppercase tracking-wider mb-2">Por que a Fortis</p>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">Autoridade que se vê no serviço.</h2>
+          <p class="mt-3 text-slate-400 text-lg">Padrão de empresa séria: peça certa, técnico preparado e pós-venda que responde.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          <article class="reveal rounded-3xl border border-slate-700/50 bg-slateink-900 p-7 text-center">
+            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-signal/15 text-signal">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">Peças Originais</h3>
+            <p class="mt-2 text-slate-400 leading-relaxed">Motores e componentes de linhas homologadas (PPA, Peccinin, Rossi e compatíveis certificados).</p>
+          </article>
+          <article class="reveal rounded-3xl border border-slate-700/50 bg-slateink-900 p-7 text-center">
+            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-safety/15 text-safety">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">Técnicos Uniformizados</h3>
+            <p class="mt-2 text-slate-400 leading-relaxed">Equipe identificada, treinada e padronizada — respeito ao seu condomínio e à sua casa.</p>
+          </article>
+          <article class="reveal rounded-3xl border border-slate-700/50 bg-slateink-900 p-7 text-center">
+            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-emerald-500/15 text-emerald-400">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">Suporte Pós-Venda Ágil</h3>
+            <p class="mt-2 text-slate-400 leading-relaxed">Canal direto no WhatsApp para ajustes, dúvidas e manutenção preventiva após a instalação.</p>
+          </article>
+        </div>
+
+        <!-- Technician strip -->
+        <div class="mt-12 reveal overflow-hidden rounded-3xl border border-slate-700/50 relative">
+          <div class="grid md:grid-cols-2">
+            <img src="images/tech.jpg" alt="Técnico especializado em campo" class="h-64 md:h-full w-full object-cover" />
+            <div class="bg-slateink-900 p-8 sm:p-10 flex flex-col justify-center">
+              <h3 class="font-display text-2xl font-bold text-white">Garantia escrita + atendimento emergencial</h3>
+              <p class="mt-3 text-slate-400">Segunda a Sábado com plantão 24h para destravamento. Você fala com quem resolve — sem enrolação.</p>
+              <a href="tel:+5511987654321" class="mt-6 inline-flex font-display text-2xl font-bold text-signal hover:text-signal-soft">(11) 98765-4321</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FINAL CTA BAND ========== -->
+    <section class="relative py-20 overflow-hidden">
+      <img src="images/cta-bg.jpg" alt="" class="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+      <div class="absolute inset-0 bg-slateink-950/85"></div>
+      <div class="relative mx-auto max-w-3xl px-4 text-center reveal">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">Pronto para liberar o portão com segurança?</h2>
+        <p class="mt-3 text-slate-300 text-lg">Fale agora com a equipe Fortis e receba orientação técnica sem custo.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+quero+um+or%C3%A7amento+com+a+Fortis" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-wa px-7 py-3.5 font-bold text-white hover:brightness-110 min-h-[3.25rem]">WhatsApp Agora</a>
+          <a href="tel:+5511987654321" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 font-bold text-white hover:bg-white/10 min-h-[3.25rem]">Ligar (11) 98765-4321</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT / FOOTER ========== -->
+    <footer id="contato" class="border-t border-slate-800 bg-slateink-950 pt-16 pb-10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <!-- Contact card -->
+          <div class="lg:col-span-2 rounded-3xl border border-slate-700/60 bg-slateink-900 p-7">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="grid h-11 w-11 place-items-center rounded-xl bg-signal text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h7l-1 8 10-13h-7l0-7z"/></svg>
+              </span>
+              <div>
+                <p class="font-display font-bold text-xl text-white">Fortis Automação</p>
+                <p class="text-sm text-slate-400">Portões Automáticos &amp; Segurança</p>
+              </div>
+            </div>
+            <dl class="space-y-3 text-slate-300">
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-wider text-slate-500">WhatsApp / Telefone</dt>
+                <dd class="mt-1"><a class="font-display text-2xl font-bold text-white hover:text-signal" href="tel:+5511987654321">(11) 98765-4321</a></dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Horário</dt>
+                <dd class="mt-1 font-medium">Segunda a Sábado — Atendimento Emergencial 24h</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Cobertura</dt>
+                <dd class="mt-1">Atendimento Especializado na região metropolitana e cidades próximas. Consulte disponibilidade.</dd>
+              </div>
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Garantia</dt>
+                <dd class="mt-1">1 ano em serviços e peças instaladas pela Fortis.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div>
+            <h4 class="font-display font-bold text-white mb-4">Navegação</h4>
+            <ul class="space-y-2.5 text-slate-400">
+              <li><a href="#servicos" class="hover:text-white">Serviços</a></li>
+              <li><a href="#manutencao" class="hover:text-white">Manutenção</a></li>
+              <li><a href="#portfolio" class="hover:text-white">Portfólio</a></li>
+              <li><a href="#orcamento" class="hover:text-white">Orçamento</a></li>
+              <li><a href="#contato" class="hover:text-white">Contato</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-display font-bold text-white mb-4">Canais</h4>
+            <ul class="space-y-2.5 text-slate-400">
+              <li><a href="https://wa.me/5511987654321" target="_blank" rel="noopener noreferrer" class="hover:text-wa">WhatsApp</a></li>
+              <li><a href="tel:+5511987654321" class="hover:text-white">Telefone</a></li>
+              <li><a href="mailto:contato@fortisautomacao.demo" class="hover:text-white">contato@fortisautomacao.demo</a></li>
+            </ul>
+            <a href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+vim+pelo+site" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-wa py-3 font-bold text-white hover:brightness-110">Chamar Agora</a>
+          </div>
+        </div>
+
+        <div class="mt-12 flex flex-col sm:flex-row justify-between gap-3 border-t border-slate-800 pt-6 text-sm text-slate-500">
+          <p>© <span id="year"></span> Fortis Automação — Demo comercial. Dados de contato ilustrativos.</p>
+          <p>Site demo para apresentação a clientes em todo o Brasil.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ========== FLOATING WHATSAPP ========== -->
+  <a
+    href="https://wa.me/5511987654321?text=Ol%C3%A1%2C+preciso+de+ajuda+com+port%C3%A3o+autom%C3%A1tico"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="float-wa fixed bottom-5 right-5 z-[80] grid h-14 w-14 place-items-center rounded-full bg-wa text-white shadow-xl hover:scale-105 transition"
+    aria-label="Abrir WhatsApp"
+  >
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ========== VANILLA JS ========== -->
+  <script>
+    (function () {
+      const WA_NUMBER = "5511987654321";
+
+      // Year
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+      // Mobile drawer
+      const burger = document.getElementById("burger");
+      const drawer = document.getElementById("drawer");
+      const backdrop = document.getElementById("drawer-backdrop");
+      const closeBtn = document.getElementById("drawer-close");
+
+      function openDrawer() {
+        drawer.classList.add("open");
+        drawer.setAttribute("aria-hidden", "false");
+        backdrop.classList.remove("pointer-events-none", "opacity-0");
+        backdrop.classList.add("opacity-100");
+        burger.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      }
+      function closeDrawer() {
+        drawer.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+        backdrop.classList.add("pointer-events-none", "opacity-0");
+        backdrop.classList.remove("opacity-100");
+        burger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+
+      burger?.addEventListener("click", openDrawer);
+      closeBtn?.addEventListener("click", closeDrawer);
+      backdrop?.addEventListener("click", closeDrawer);
+      document.querySelectorAll(".drawer-link").forEach((a) => a.addEventListener("click", closeDrawer));
+
+      // Estimator widget → WhatsApp prefilled
+      const options = document.querySelectorAll(".estimator-option");
+      const cta = document.getElementById("estimator-cta");
+
+      function setActive(btn) {
+        options.forEach((o) => o.classList.remove("active"));
+        btn.classList.add("active");
+        const msg = btn.getAttribute("data-msg") || "";
+        cta.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+      }
+
+      options.forEach((btn) => {
+        btn.addEventListener("click", () => setActive(btn));
+        btn.setAttribute("role", "radio");
+        btn.setAttribute("aria-checked", btn.classList.contains("active") ? "true" : "false");
+      });
+
+      // Keep aria-checked in sync
+      const observerSync = () => {
+        options.forEach((o) => o.setAttribute("aria-checked", o.classList.contains("active") ? "true" : "false"));
+      };
+      options.forEach((btn) => btn.addEventListener("click", observerSync));
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("show");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        );
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add("show"));
+      }
+
+      // Subtle header elevation on scroll
+      const header = document.getElementById("site-header");
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!header) return;
+          header.style.boxShadow = window.scrollY > 12 ? "0 8px 30px rgba(0,0,0,0.35)" : "none";
+        },
+        { passive: true }
+      );
+    })();
+  </script>
+</body>
+</html>
